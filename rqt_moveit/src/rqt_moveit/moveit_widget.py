@@ -86,6 +86,9 @@ class MoveitWidget(QWidget):
         # Custom widget classes don't show in QSplitter when they instantiated
         # in .ui file and not explicitly added to QSplitter like this. Thus
         # this is a workaround.
+        print "type of self.widget_topic"
+        print type(self._widget_topic)
+        print self._widget_topic
         self._splitter.addWidget(self._widget_topic)
 
         self._spinbox_refreshrate.valueChanged.connect(
@@ -109,7 +112,7 @@ class MoveitWidget(QWidget):
         # To connect signal in a widget to PluginContainerWidget.
         #TODO: In this way, Signal from only one instance is hooked.
         # Not a good design at all.
-        self.sig_sysmsg = self._widget_topic.sig_sysmsg
+        self.sig_sysmsg = Signal(str) #self._widget_topic.sig_sysmsg
 
         # Init monitoring parameters.
         self._is_checking_params = True
@@ -255,8 +258,7 @@ class MoveitWidget(QWidget):
                         # exists or not.
                         has_param = rospy.has_param(param_name)
                 except rospy.exceptions.ROSException as e:
-                    self.sig_sysmsg.emit(
-                         'Exception upon rospy.has_param {}'.format(e.message))
+                    self.sig_sysmsg.emit('Exception upon rospy.has_param {}'.format(e.message))
                 signal.emit(has_param, param_name)
                 rospy.loginfo('has_param {}, check_param_alive: {}'.format(
                                                       has_param, param_name))

@@ -86,7 +86,10 @@ void RViz::initPlugin(qt_gui_cpp::PluginContext& context)
   menu_bar->setVisible(!hide_menu_);
   widget_->setMenuBar(menu_bar);
 
-  widget_->initialize(display_config_.c_str());
+  //widget_->initialize(display_config_.c_str());
+  //TODO: set this from the launch file.
+  widget_->initialize("/home/ylee8/ros_ws/src/dragonfly/spacecraft_description/launch/spacecraft.rviz");
+
 
   // disable quit action in menu bar
   QMenu* menu = 0;
