@@ -30,6 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <ros/package.h>
 #include <OGRE/OgreLogManager.h>
 
 #include <QCloseEvent>
@@ -87,9 +88,9 @@ void RViz::initPlugin(qt_gui_cpp::PluginContext& context)
   widget_->setMenuBar(menu_bar);
 
   //widget_->initialize(display_config_.c_str());
-  //TODO: set this from the launch file.
-  widget_->initialize("/home/ylee8/ros_ws/src/dragonfly/spacecraft_description/launch/spacecraft.rviz");
-
+  //NOTE: For now, hardcode the path to RVIZ config file. This loads the 3D arm model.
+  std::string rviz_config_file = ros::package::getPath("dragonfly_description") + "/launch/mda_lab_arm.rviz";
+  widget_->initialize(rviz_config_file.c_str());
 
   // disable quit action in menu bar
   QMenu* menu = 0;
